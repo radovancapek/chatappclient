@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
+import Home from "./Home/Home";
+import Login from "./Login/Login";
+
+function setLoggedUser(user) {
+    sessionStorage.setItem('loggedUser', JSON.stringify(user));
+}
+
+function getLoggedUser() {
+    const userString = sessionStorage.getItem('loggedUser');
+    const user = JSON.parse(userString);
+    return user;
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const loggedUser = getLoggedUser();
+
+    if(!loggedUser) {
+        return <Login setLoggedUser={setLoggedUser} />
+    }
+
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <Home user={loggedUser}/>
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

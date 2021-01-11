@@ -1,0 +1,18 @@
+
+.login{
+  height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+form {
+  margin: auto;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  .textField {
+    margin-bottom: 5px;
+  }
+}

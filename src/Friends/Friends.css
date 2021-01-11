@@ -1,0 +1,17 @@
+.home {
+}
+.windows {
+    display: flex;
+    flex-direction: row;
+}
+.chat {
+    border: 1px solid red;
+    width: 40%;
+    height: 400px;
+}
+.friends {
+    border: 1px solid blue;
+    width: 40%;
+    height: 400px;
+    overflow: scroll;
+}

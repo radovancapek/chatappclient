@@ -1,0 +1,78 @@
+.chat {
+  height: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px auto 80px;
+  grid-gap: 5px;
+  grid-template-areas: "name" "messages" "message";
+  justify-content: space-around;
+}
+
+.name {
+  grid-area: name;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.header {
+}
+
+.messages {
+  grid-area: messages;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: auto;
+  background-color: white;
+  padding: 3%;
+}
+
+.messageWrapper {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 15px;
+  max-width: 80%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  .messageText {
+
+  }
+
+  .messageTime {
+    margin-top: 5px;
+    font-size: xx-small;
+  }
+}
+
+.left {
+  justify-content: flex-start;
+  margin-right:auto;
+  background-color: whitesmoke;
+}
+
+.right {
+  justify-content: flex-end;
+  background-color: lightblue;
+  margin-left:auto;
+}
+
+.newMessageWrap {
+  grid-area: message;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .newMessage {
+    flex-grow: 1;
+    margin-right: 3px;
+  }
+
+  button {
+    flex-grow: 1;
+    max-height: 60px;
+  }
+}
+
