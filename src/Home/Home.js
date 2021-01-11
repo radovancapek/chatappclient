@@ -63,21 +63,6 @@ class Home extends React.Component {
         this.setState({messages: messages});
     }
 
-    createUsers = () => {
-        fetch(API_URL + '/users', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: 'user1',
-                password: 'user1',
-                online: false
-            })
-        }).then(response => response.json())
-    }
-
     fetchFriends() {
         fetch(API_URL + "/users")
             .then(response => response.json())
@@ -154,7 +139,6 @@ class Home extends React.Component {
                     <div className="buttons">
                         <p>{this.props.user.name}</p>
                         <button onClick={this.logOut}>LogOut</button>
-                        <button onClick={this.createUsers}>Create users</button>
                     </div>
                 </div>
             </div>
