@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_URL = 'https://chat-app-capek.herokuapp.com/api';
 //const API_URL = 'http://localhost:8080/api';
 
 class Home extends React.Component {
