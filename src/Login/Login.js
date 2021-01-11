@@ -48,6 +48,7 @@ class Login extends React.Component {
     }
 
     render() {
+        console.log("url " + process.env.REACT_APP_BACKEND_URL);
         return (
             <div className="login">
                     <form onSubmit={this.handleFormSubmit}>
