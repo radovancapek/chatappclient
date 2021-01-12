@@ -6,6 +6,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { API_URL } from "../Const";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 class Home extends React.Component {
 
@@ -76,7 +78,7 @@ class Home extends React.Component {
 
     logOut = () => {
         sessionStorage.removeItem('loggedUser');
-        this.forceUpdate();
+        this.props.logOut();
     }
 
     render() {
@@ -130,8 +132,15 @@ class Home extends React.Component {
                         {error ? <p>{error.message}</p> : null}
                     </div>
                     <div className="buttons">
-                        <p>{this.props.user.name}</p>
-                        <button onClick={this.logOut}>LogOut</button>
+                        <TextField id="outlined-basic" size="small" label={"Logged user: " + this.props.user.name} variant="outlined" />
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                            onClick={this.logOut}
+                        >
+                            LogOut
+                        </Button>
                     </div>
                 </div>
             </div>

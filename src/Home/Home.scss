@@ -15,8 +15,13 @@
   .buttons {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+
+    .loggedUser {
+
+    }
   }
 
   .chatContainer {
