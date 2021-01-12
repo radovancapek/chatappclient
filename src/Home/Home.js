@@ -5,10 +5,7 @@ import "./Home.scss";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-
-
-const API_URL = 'https://chat-app-capek.herokuapp.com/api';
-//const API_URL = 'http://localhost:8080/api';
+import { API_URL } from "../Const";
 
 class Home extends React.Component {
 
@@ -33,7 +30,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         socket.on("connect", () => {
-            console.log("home socket " + socket.id);
+            socket.emit("new_user", { userId: this.props.user.id });
             socket.on("get_messages", this.getMessages);
             socket.on("get_unread", this.getUnread);
             socket.on("set_seen", () => {socket.emit("get_unread", {to: this.props.user.id})});
@@ -44,7 +41,6 @@ class Home extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("home componentDidUpdate");
     }
 
     newMessage = (message) => {
@@ -55,7 +51,6 @@ class Home extends React.Component {
     }
 
     getUnread = (messages) => {
-        console.log("home getUnread " + messages[3]);
         this.setState({newMessages: messages});
     }
 
@@ -72,7 +67,6 @@ class Home extends React.Component {
                     loadingFriends: false
                 })
             )
-            // Catch any errors we hit and update the app
             .catch(error => this.setState({error, loadingFriends: false}));
     }
 
@@ -96,7 +90,6 @@ class Home extends React.Component {
                             {(!loadingFriends && friends.length > 0) ? (
                                 friends.map((friend, i) => {
                                     const {id, name} = friend;
-                                    console.log("id " + id + " " + name + " " + this.props.user.id + " " + this.state.newMessages[id]);
                                     if (id !== this.props.user.id) {
                                         return (
                                             <div className={i === 1 ? 'friendWrapper first-child' : 'friendWrapper'}

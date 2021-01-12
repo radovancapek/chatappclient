@@ -19,15 +19,14 @@ class Chat extends React.Component {
     }
 
     componentDidMount() {
-        console.log("chat componentDidMount set seen" + this.props.loggedUser.id + " " + this.props.friend);
         socket.on("get_messages", this.getMessages);
         socket.on("new_message", this.newMessage);
+        socket.on("seen", this.fetchMessages);
         socket.emit("set_seen", {to: this.props.loggedUser.id, from: this.props.friend});
         this.fetchMessages();
     }
 
     getMessages = (messages) => {
-        //console.log("getMessages " + messages);
         this.setState({messages: messages});
     }
 
@@ -36,9 +35,12 @@ class Chat extends React.Component {
     }
 
     newMessage = (message) => {
-        this.setState(prevState => ({
-            messages: [...prevState.messages, message]
-        }))
+        if(message.from === this.props.friend || message.from === this.props.loggedUser.id) {
+            socket.emit("set_seen", {to: this.props.loggedUser.id, from: this.props.friend});
+            this.setState(prevState => ({
+                messages: [...prevState.messages, message]
+            }))
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -47,9 +49,7 @@ class Chat extends React.Component {
             this.setState({name: this.props.name})
             this.setState({messages: []});
             socket.emit("get_messages", {from: this.props.loggedUser.id, to: this.props.friend});
-            console.log("chat componentDidUpdate set seen " + this.props.loggedUser.id + " " + this.props.friend);
             socket.emit("set_seen", {to: this.props.loggedUser.id, from: this.props.friend});
-
         }
         if (this.props.friend !== this.state.friend) {
 
@@ -71,7 +71,6 @@ class Chat extends React.Component {
     }
 
     sendMessage() {
-        console.log("chat new message from " + this.props.loggedUser.id + " to " + this.props.friend);
         if (this.state.newMessage.length > 0) {
             socket.emit("new_message", {
                 text: this.state.newMessage,
@@ -98,18 +97,25 @@ class Chat extends React.Component {
                 </div>
                 <div className="messages" ref={this.divRef}>
                     {this.state.messages.reverse().map(message => {
-                        const {id, text, from} = message;
+                        const {id, text, from, seen, updatedAt} = message;
+                        let seenAt = null;
                         let messageCN = '';
                         if (from === this.props.loggedUser.id) {
                             messageCN = "right";
                         } else {
                             messageCN = "left";
                         }
+                        if(seen) {
+                            seenAt = (
+                                <div className="seenAt">Seen at <Moment className="messageTime" format="HH:mm D.MM.YYYY">{updatedAt}</Moment></div>
+                            )
+                        }
                         return (
-                            <div className={"messageWrapper " + messageCN} key={id}>
-                                <div className="messageText">{text}</div>
-                                <Moment className="messageTime" format="HH:mm D.MM.YYYY">{message.createdAt}</Moment>
 
+                            <div className={"messageWrapper " + messageCN} key={id}>
+                                <Moment className="messageTime" format="HH:mm D.MM.YYYY">{message.createdAt}</Moment>
+                                <div className="messageText">{text}</div>
+                                {seenAt}
                             </div>
                         );
                     })}

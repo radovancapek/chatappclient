@@ -32,31 +32,45 @@
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  padding: 15px;
+  padding: 0px 15px 5px 15px;
   max-width: 80%;
   overflow-wrap: break-word;
   word-break: break-word;
 
+  .messageTime {
+    text-align: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: xx-small;
+  }
+
   .messageText {
 
   }
-
-  .messageTime {
-    margin-top: 5px;
-    font-size: xx-small;
-  }
 }
+
+
 
 .left {
   justify-content: flex-start;
   margin-right:auto;
   background-color: whitesmoke;
+
+  .seenAt {
+    display: none;
+  }
 }
 
 .right {
   justify-content: flex-end;
   background-color: lightblue;
   margin-left:auto;
+
+  .seenAt {
+    margin-top: 5px;
+    font-size: xx-small;
+    color: gray;
+  }
 }
 
 .newMessageWrap {

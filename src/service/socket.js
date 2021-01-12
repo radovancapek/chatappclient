@@ -1,7 +1,4 @@
 import socketio from "socket.io-client";
+import BACKEND_URL from "../Const";
 
-const URL = "https://chat-app-capek.herokuapp.com";
-
-// const URL = "http://localhost:8080/";
-
-export const socket = socketio(URL);
+export const socket = socketio(BACKEND_URL);
