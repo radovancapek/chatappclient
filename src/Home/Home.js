@@ -17,10 +17,8 @@ class Home extends React.Component {
             newMessages: [],
             loggedUser: props.user,
             timestamp: null,
-            loadingMessages: true,
             loadingFriends: true,
             error: null,
-            messages: [],
             selectedMessages: [],
             friends: [],
             showChat: false,
@@ -33,7 +31,6 @@ class Home extends React.Component {
     componentDidMount() {
         socket.on("connect", () => {
             socket.emit("new_user", { userId: this.props.user.id });
-            socket.on("get_messages", this.getMessages);
             socket.on("get_unread", this.getUnread);
             socket.on("set_seen", () => {socket.emit("get_unread", {to: this.props.user.id})});
             socket.on("new_message", this.newMessage);
@@ -42,22 +39,12 @@ class Home extends React.Component {
         this.fetchFriends();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-    }
-
     newMessage = (message) => {
         socket.emit("get_unread", {to: this.props.user.id});
-        this.setState(prevState => ({
-            messages: [...prevState.messages, message]
-        }))
     }
 
     getUnread = (messages) => {
         this.setState({newMessages: messages});
-    }
-
-    getMessages = (messages) => {
-        this.setState({messages: messages});
     }
 
     fetchFriends() {
